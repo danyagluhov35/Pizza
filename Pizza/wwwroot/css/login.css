@@ -1,0 +1,45 @@
+﻿body {
+    background-color: rgb(104, 104, 104);
+    overflow-y: hidden;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+}
+
+.authorize {
+    margin: 0 auto;
+}
+
+.login {
+    display: block;
+    width: 250px;
+    padding: 10px 0 10px 5px;
+    font-size: 20px;
+}
+
+.password {
+    display: block;
+    width: 250px;
+    padding: 10px 0 10px 5px;
+    font-size: 20px;
+    margin-top: 5px;
+}
+
+.send {
+    display: block;
+    width: 100%;
+    padding: 20px 0;
+    margin-top: 20px;
+}
+
+.back {
+    position: absolute;
+    left: 5px;
+    top: 5px;
+    text-decoration: none;
+}

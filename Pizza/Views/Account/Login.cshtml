@@ -1,0 +1,37 @@
+﻿
+
+<link rel="stylesheet" href="~/css/login.css">
+
+<a asp-controller="Home" asp-action="Index" class="back">Вернуться на главную</a>
+<div class="container">
+    <div class="authorize">
+        <input type="text" class="login" placeholder="Логин">
+        <input type="password" class="password" placeholder="Пароль">
+        <button class="send">Авторизация</button>
+<button class="data">Data</button>
+    </div>
+</div>
+
+
+
+
+<script>
+    var token;
+    document.querySelector(".send").addEventListener("click", async e => {
+        const response = await fetch("/Account/Login", {
+            method : "POST",
+            headers: { "Accept": "application/json", "Content-Type": "application/json" },
+            body : JSON.stringify({
+                Login : document.querySelector(".login").value,
+                Password : document.querySelector(".password").value
+            })
+        })
+        if(response.ok == true){
+            const data = await response.json()
+
+            sessionStorage.setItem("token", data)
+            token = data;
+            location = data.url
+        }
+    })
+</script>

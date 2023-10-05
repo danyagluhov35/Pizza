@@ -1,0 +1,59 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="~/css/main.css">
+    <link rel="stylesheet" href="~/css/normalize.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
+</head>
+<body>
+    <div class="wrapper">
+        <div class="container">
+            <div class="burger">
+                <span></span>
+            </div>
+            <div class="header">
+                <a href="/" class="logo">
+                    <img src="~/images/mainImage/Логотип.svg" alt="">
+                </a>
+                <nav class="navigation">
+                    <ul class="menu">
+                        <li class="btn__list">
+                            <a href="#" class="btn__link">
+                                Пицца
+                            </a>
+                        </li>
+                        <li class="btn__list">
+                            <a href="#" class="btn__link">
+                                Японская кухня
+                            </a>
+                        </li>
+                        <li class="btn__list">
+                            <a href="#" class="btn__link">
+                                Напитки
+                            </a>
+                        </li>
+                        <li class="btn__list">
+                            <a href="#" class="btn__link">
+                                Акции
+                            </a>
+                        </li>
+                        <li class="btn__list">
+                            <a href="#" class="btn__link">
+                                Контакты
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+                <div class="basket">
+                    <a href="#">
+                        <img src="~/images/mainImage/Корзина.svg" alt="">
+                    </a>
+                </div>
+            </div>
+        </div>
+        @RenderBody()
+    </div>
+</body>
+</html>

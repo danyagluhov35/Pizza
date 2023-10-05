@@ -1,0 +1,64 @@
+﻿@{
+    Layout = "/Views/Shared/_Layout.cshtml";
+}
+@using Pizza.Context;
+@model PizzaProjectContext;
+
+
+
+<a href="admin">Войти панель</a>
+<div class="container">
+    <div class="main">
+        <div class="swiper">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide"><img src="images/mainImage/sliderImage-1.jpg" alt=""></div>
+                <div class="swiper-slide"><img src="images/mainImage/sliderImage-1.jpg" alt=""></div>
+                <div class="swiper-slide"><img src="images/mainImage/sliderImage-1.jpg" alt=""></div>
+                <div class="swiper-slide"><img src="images/mainImage/pizzzzaaaaaaaa.jpg" alt=""></div>
+            </div>
+        </div>
+    </div>
+    <div class="products">
+        <h2 class="product__name">Пицца</h2>
+        <div class="pizza__items items">
+            @foreach (var item in Model.ProductPizzas)
+            {
+                <div class="item">
+                    <img src="@item.ImgPath" alt="">
+                    <p class="item__name">@item.Name</p>
+                    <button class="btn__send">@item.Price<span>.руб</span></button>
+                </div>
+            }
+        </div>
+
+        
+    </div>
+</div>
+<footer class="footer">
+    <div class="container">
+        <div class="footer__content">
+            <div class="contact">
+                <div class="contact__text contact-text__item">Контактная информация</div>
+                <p class="address contact-paragraph__item">Адрес: <span class="addres__text">Любецкая 176А</span></p>
+                <p class="number contact-paragraph__item">Телефон: <span class="number__text">87-67-76</span></p>
+            </div>
+            <div class="information">
+                <div class="information__text contact-text__item">Общая информация</div>
+                <p class="weekday contact-paragraph__item">-ПН-ПТ: <span class="time">10:00-23:00</span></p>
+                <p class="weekday contact-paragraph__item">-СБ-ВС: <span class="time">11:00-00:00</span></p>
+            </div>
+            <div class="soc-media">
+                <div class="soc-media__text contact-text__item">Социальные сети</div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+<script src="/js/burger.js"></script>
+<script src="/js/swiper.js"></script>
+
+<script>
+
+</script>
+
