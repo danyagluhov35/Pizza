@@ -16,9 +16,13 @@ namespace Pizza.Areas.Admin.Controllers
     {
         PizzaProjectContext db;
         public AdminController(PizzaProjectContext db) => this.db = db;
-        public IActionResult Index()
+        public IActionResult Index(string productName)
         {
-            return View(new ProductsViewModel() { pizzaProduct = db.ProductPizzas });
+            ProductsViewModel productModel = new ProductsViewModel();
+            
+            if(productName != null)
+                productModel.products = db.Products.Where(u => u.CategoriesName == productName);
+            return View(productModel);
         }
         [Route("/save")]
         [HttpPost]
@@ -26,26 +30,23 @@ namespace Pizza.Areas.Admin.Controllers
         {
             ProductFactory productFactory;
 
-            if(product.CategoriesName == "pizza")
-            {
-                productFactory = new ProductFactoryPizza(product.Name!, product.Price, product.ImgPath);
-                IProduct pizza = productFactory.CreateProduct();
-                db.ProductPizzas.Add(new ProductPizzaContext() { Name = pizza.Name, ImgPath = pizza.GetImagePath(), CategoriesName = product.CategoriesName, Price = pizza.GetPrice()});
-                db.SaveChanges();
-            }
+            productFactory = new ProductFactoryPizza(product.Name!, product.Price, product.ImgPath);
+            IProduct pizza = productFactory.CreateProduct();
+            db.Products.Add(new Product() { Name = pizza.Name, ImgPath = pizza.GetImagePath(), CategoriesName = product.CategoriesName, Price = pizza.GetPrice()});
+            db.SaveChanges();
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", new { productName = product.CategoriesName });
         }
         [Route("/delete")]
         public async Task<IActionResult> Delete(int id)
         {
-            ProductPizzaContext? pizzaContext = await db.ProductPizzas.FirstOrDefaultAsync(p => p.Id == id);
+            Product? pizzaContext = await db.Products.FirstOrDefaultAsync(p => p.Id == id);
             if (pizzaContext != null)
             {
-                db.ProductPizzas.Remove(pizzaContext);
+                db.Products.Remove(pizzaContext);
                 await db.SaveChangesAsync();
             }
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", new { productName = pizzaContext.CategoriesName });
         }
     }
 }

@@ -18,7 +18,7 @@ namespace Pizza.Context
         }
 
         public virtual DbSet<Category> Categories { get; set; } = null!;
-        public virtual DbSet<ProductPizzaContext> ProductPizzas { get; set; } = null!;
+        public virtual DbSet<Product> Products { get; set; } = null!;
         public virtual DbSet<User> Users { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -41,9 +41,9 @@ namespace Pizza.Context
                 entity.Property(e => e.Id).ValueGeneratedOnAdd();
             });
 
-            modelBuilder.Entity<ProductPizzaContext>(entity =>
+            modelBuilder.Entity<Product>(entity =>
             {
-                entity.ToTable("ProductPizza");
+                entity.ToTable("Product");
 
                 entity.Property(e => e.CategoriesName).HasMaxLength(50);
 
@@ -54,9 +54,9 @@ namespace Pizza.Context
                 entity.Property(e => e.Name).HasMaxLength(50);
 
                 entity.HasOne(d => d.CategoriesNameNavigation)
-                    .WithMany(p => p.ProductPizzas)
+                    .WithMany(p => p.Products)
                     .HasForeignKey(d => d.CategoriesName)
-                    .HasConstraintName("FK_ProductPizza_Categories");
+                    .HasConstraintName("FK_Product_Categories");
             });
 
             modelBuilder.Entity<User>(entity =>

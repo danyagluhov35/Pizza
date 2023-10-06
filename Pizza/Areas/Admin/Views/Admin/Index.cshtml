@@ -7,6 +7,22 @@
 
 <link rel="stylesheet" href="~/css/admin.css">
 
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+</body>
+</html>
+
+
+
+
 <div class="container">
     <div class="main">
         <div class="sidebar">
@@ -21,7 +37,7 @@
                             <a href="#" class="management-menu__link management-nav__menu"><span><img src="/images/adminImage/Mask group-1.svg" alt=""></span>Меню</a>
                             <ul class="sub-management-menu__list">
                                 <li>
-                                    <a href="#" class="management-menu__link sub-management-menu__link sub-management-nav__menu pizza-sub-management-nav__menu"><span><img src="/images/adminImage/Mask group.svg" alt=""></span>Пицца</a>
+                                    <a asp-action="Index" asp-controller="Admin" asp-route-productName="pizza" class="management-menu__link sub-management-menu__link sub-management-nav__menu pizza-sub-management-nav__menu"><span><img src="/images/adminImage/Mask group.svg" alt=""></span>Пицца</a>
                                 </li>
                                 <li>
                                     <a href="#" class="management-menu__link sub-management-menu__link sub-management-nav__menu rolls-sub-management-nav__menu"><span><img src="/images/adminImage/Mask group.svg" alt=""></span>Роллы</a>
@@ -40,7 +56,7 @@
         <div class="window__settings">
             <div class="window__settings-main">
                 <table>
-                    <h2 class="desc">Меню: <span class="desc__name">Пицца</span></h2>
+                    <h2 class="desc">Меню: <span class="desc__name">@Model.Product.CategoriesName</span></h2>
                     <thead>
                         <tr>
                             <td>Id</td>
@@ -51,18 +67,18 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach(var item in Model.pizzaProduct)
+                        @foreach(var item in Model.products)
                         {
-                            <tr>
+                            <tr id="@item.Id">
                                 <td>@item.Id</td>
-                                <td>@item.Name</td>
+                                <td><p>@item.Name</p></td>
                                 <td><img class="item-image" src="@item.ImgPath" /></td>
-                                <td>@item.Price</td>
+                                <td><p>@item.Price</p></td>
                                 <td>
                                     <a href="#" class="edit"><img src="/images/adminImage/edit.svg" alt=""></a>
                                 </td>
                                 <td>
-                                    <a asp-action="delete" asp-route-id="@item.Id" class="delete"><img src="/images/adminImage/delete.svg" alt=""></a>
+                                    <a href="#" class="delete"><img src="/images/adminImage/delete.svg" alt=""></a>
                                 </td>
                             </tr>
                         }
@@ -104,13 +120,89 @@
     </div>
 </div>
 
-<script src="~/js/admin.js"></script>
+<script>
+    // Настройка сайдбара
+    const arrowSideBar = document.querySelector(".sideBarArrow")
+    const sidebar = document.querySelector(".sidebar")
+    arrowSideBar.addEventListener("click", async e => {
+        e.preventDefault()
+        arrowSideBar.classList.toggle("open")
+        sidebar.classList.toggle("open")
+    })
+
+    // Настройка открытия и закрытия окна добавления контента
+    const addBlockSet = document.querySelector(".addblock-settings")
+
+    document.querySelector(".addblock").addEventListener("click", async e => {
+        addBlockSet.classList.add("open")
+    })
+    document.querySelector(".close").addEventListener("click", async e => {
+        addBlockSet.classList.remove("open")
+    })
+
+    // Удаление эл-та
+    document.querySelectorAll(".delete").forEach(element => {
+        element.addEventListener("click", async e => {
+            const element = e.target.parentNode.parentNode.parentNode
+            element.style.display = "none"
+        })
+    });
+
+    const editBlockSet = document.querySelectorAll(".edit").forEach((e) => {
+        e.addEventListener("click", async c => {
+            var res = e.parentNode.parentNode.getAttribute("id")
+            var item = document.getElementById(res).getElementsByTagName("td")
+
+            const label = document.createElement("label")
+            const file = document.createElement("input")
+            const span = document.createElement("span")
+
+            label.classList.add("input-file")
+            file.classList.add("file")
+            file.type = "file"
+            span.textContent = "Выберите файл"
+
+            file.addEventListener("change", async e => {
+                span.textContent = e.target.files[0].name
+            })
+
+            label.append(file)
+            label.append(span)
+
+            item[1].replaceChild(document.createElement("input"), item[1].firstChild)
+            item[2].replaceChild(label, item[2].firstChild)
+            item[3].replaceChild(document.createElement("input"), item[3].firstChild)
+
+
+            const editSave = document.createElement("a")
+            const editSaveImg = document.createElement("img")
+            editSaveImg.src = "/images/adminImage/save.svg"
+            editSave.append(editSaveImg)
+            editSave.classList.add("editSave")
+            c.target.parentNode.parentNode.replaceChild(editSave, e)
+
+            var editClose = document.createElement("a");
+            const editCloseImg = document.createElement("img")
+            editCloseImg.src = "/images/adminImage/close.svg"
+            editClose.append(editCloseImg)
+            editClose.classList.add("editClose")
+
+            editClose.href = "#"
+            var tdEditClode = editSave.parentNode.nextElementSibling
+            console.log(tdEditClode.childNodes[0])
+            tdEditClode.replaceChild(editClose, tdEditClode.childNodes[0])
+
+
+            editClose.addEventListener("click", async v => {
+                alert("На данный момент функция не работает")
+            })
+        })
+    })
+</script>
 
 <script>
     var imagePath;
     var buttonFile = document.querySelector(".addFile")
-
-
 
     document.querySelector(".fileImage").addEventListener("change", async e => {
         const file = e.target.files[0]
