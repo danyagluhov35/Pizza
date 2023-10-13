@@ -43,3 +43,12 @@
     top: 5px;
     text-decoration: none;
 }
+
+
+.IsValidUser {
+    text-align: center;
+    display: block;
+    margin: 10px 0 0 0;
+    font-size: 22px;
+    color: #cf0202;
+}

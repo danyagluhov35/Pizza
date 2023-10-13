@@ -1,0 +1,45 @@
+﻿@{
+    Layout = "/Views/Shared/_Layout.cshtml";
+}
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+
+
+
+<div class="container">
+    <div class="main">
+        <div class="sidebar">
+            <div class="sidedar-main">
+                <p class="management__name">Управление</p>
+                <div class="management__nav">
+                    <ul class="management-menu__list">
+                        <li>
+                            <a href="slide" class="management-menu__link management-nav__slide"><span><img src="/images/adminImage/Mask group.svg" alt=""></span>Слайд</a>
+                        </li>
+                        <li>
+                            <a href="#" class="management-menu__link management-nav__menu"><span><img src="/images/adminImage/Mask group-1.svg" alt=""></span>Меню</a>
+                            <ul class="sub-management-menu__list">
+                                <li>
+                                    <a asp-action="Index" asp-controller="Products" asp-route-productName="pizza" class="management-menu__link sub-management-menu__link sub-management-nav__menu pizza-sub-management-nav__menu"><span><img src="/images/adminImage/Mask group.svg" alt=""></span>Пицца</a>
+                                </li>
+                                <li>
+                                    <a href="#" class="management-menu__link sub-management-menu__link sub-management-nav__menu rolls-sub-management-nav__menu"><span><img src="/images/adminImage/Mask group.svg" alt=""></span>Роллы</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#" class="management-menu__link management-nav__info"><span><img src="/images/adminImage/Mask group-2.svg" alt=""></span>Информация</a>
+                        </li>
+                    </ul>
+
+                </div>
+            </div>
+            <a href="#" class="sideBarArrow"><img src="/images/adminImage/arrowSideBar.png" alt=""></a>
+        </div>
+        <div class="window__settings">
+            <div class="window__settings-main">
+                @RenderBody()
+            </div>
+        </div>
+    </div>
+</div>

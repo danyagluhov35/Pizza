@@ -1,0 +1,177 @@
+﻿body {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+h2 {
+    margin: 0;
+}
+
+p {
+    margin: 0;
+}
+
+.item {
+}
+
+.actions-items {
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    grid-gap: 44px;
+}
+
+.item-title {
+    background-color: #7B972D;
+    opacity: 60%;
+    width: 100%;
+    cursor: pointer;
+}
+
+    .item-title h2 {
+        color: #fff;
+        text-align: center;
+        padding: 10px 0;
+    }
+
+.item-text {
+    color: #0E1945;
+    font-size: 16px;
+    margin: 15px 0 30px 30px;
+    display: none;
+}
+
+    .item-text.open {
+        display: block;
+    }
+
+.item-image {
+    position: relative;
+    padding: 0 0 62% 0;
+}
+
+    .item-image img {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        left: 0;
+        top: 0;
+    }
+
+@media(max-width:1070px) {
+}
+
+
+/*----- Окно добавление контента -----*/
+
+h2 {
+    margin: 0;
+}
+
+p {
+    margin: 0;
+}
+
+input:focus {
+    outline: none;
+}
+
+
+/*----- Стили для input -----*/
+.main-image__input {
+    position: relative;
+    display: inline-block;
+}
+
+    .main-image__input span {
+        position: relative;
+        display: inline-block;
+        cursor: pointer;
+        outline: none;
+        text-decoration: none;
+        font-size: 14px;
+        vertical-align: middle;
+        color: rgb(255 255 255);
+        text-align: center;
+        border-radius: 4px;
+        background-color: #419152;
+        line-height: 22px;
+        height: 40px;
+        padding: 10px 20px;
+        box-sizing: border-box;
+        border: none;
+        margin: 0;
+        transition: background-color 0.2s;
+        width: 100%;
+    }
+
+    .main-image__input input[type=file] {
+        position: absolute;
+        z-index: -1;
+        opacity: 0;
+        display: block;
+        width: 0;
+        height: 0;
+    }
+
+        /* Focus */
+        .main-image__input input[type=file]:focus + span {
+            box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
+        }
+
+    /* Hover/active */
+    .main-image__input:hover span {
+        background-color: #59be6e;
+    }
+
+    .main-image__input:active span {
+        background-color: #2E703A;
+    }
+
+    /* Disabled */
+    .main-image__input input[type=file]:disabled + span {
+        background-color: #eee;
+    }
+
+
+
+
+
+
+/*----- Стили да -----*/
+
+.window-settings {
+    background-color: #E75329;
+    margin-top:40px;
+    padding:30px 0;
+    display:none;
+}
+.slide-item__add{
+    cursor:pointer;
+}
+.window-settings.open {
+    display: block;
+}
+
+.block-input {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+}
+
+.window-settings label {
+    font-size: 14px;
+    color: #fff;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.window-settings input {
+    width: 100%;
+    padding: 10px 0;
+}
+
+.block {
+    width: 100%;
+    margin: 10px 20px;
+}

@@ -1,37 +1,26 @@
-﻿
+﻿@using Pizza.Models.ViewModels;
+@model LoginViewModel;
 
 <link rel="stylesheet" href="~/css/login.css">
 
 <a asp-controller="Home" asp-action="Index" class="back">Вернуться на главную</a>
-<div class="container">
-    <div class="authorize">
-        <input type="text" class="login" placeholder="Логин">
-        <input type="password" class="password" placeholder="Пароль">
-        <button class="send">Авторизация</button>
-<button class="data">Data</button>
+
+<form asp-action="Login" asp-controller="Account" method="post">
+    <div class="container">
+        <div class="authorize">
+            <span asp-validation-for="Login"></span>
+            <input type="text" asp-for="Password" class="login" placeholder="Логин">
+            <span asp-validation-for="Password"></span>
+            <input type="password" asp-for="Login" class="password" placeholder="Пароль">
+            <input type="submit" class="send" value="Авторизация"/>
+            <span asp-validation-for="IsValidUser" class="IsValidUser"></span>
+        </div>
     </div>
-</div>
+</form>
 
 
 
 
 <script>
-    var token;
-    document.querySelector(".send").addEventListener("click", async e => {
-        const response = await fetch("/Account/Login", {
-            method : "POST",
-            headers: { "Accept": "application/json", "Content-Type": "application/json" },
-            body : JSON.stringify({
-                Login : document.querySelector(".login").value,
-                Password : document.querySelector(".password").value
-            })
-        })
-        if(response.ok == true){
-            const data = await response.json()
-
-            sessionStorage.setItem("token", data)
-            token = data;
-            location = data.url
-        }
-    })
+    
 </script>

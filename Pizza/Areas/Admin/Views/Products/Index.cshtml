@@ -1,0 +1,206 @@
+﻿@{
+    Layout = "/Areas/Admin/Views/Shared/_Layout2.cshtml";
+}
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@using Pizza.Models;
+@model ProductsViewModel;
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+</body>
+</html>
+
+
+
+<table>
+    <thead>
+        <tr>
+            <td>Id</td>
+            <td>Название</td>
+            <td>Изображение</td>
+            <td>Цена</td>
+            <td colspan="2">Действие</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.products)
+        {
+            <form asp-action="Edit" asp-controller="Admin">
+            <tr id="@item.Id">
+                <input class="idInput" style="display:none" asp-for="Product.Id" value="@item.Id" />
+                <td>@item.Id</td>
+                <td>
+                    <p>@item.Name</p>
+                    <input class="editNameInput" asp-for="Product.Name" type="text" style="display: none;" />
+                </td>
+                <td>
+                    <img src="@item.ImgPath" alt="" class="item-image">
+                    <label class="input-file" style="display: none;">
+                        <input class="file" type="file" />
+                        <span>Выберите файл</span>
+                        <input type="text" class="imgPath" asp-for="Product.ImgPath" value="@item.ImgPath">
+                    </label>
+                </td>
+                <td>
+                    <p>@item.Price</p>
+                    <input class="editPriceInput" asp-for="Product.Price" type="text" style="display: none;" />
+                </td>
+                <td>
+                    <a href="#" class="edit"><img src="/images/adminImage/edit.svg" alt=""></a>
+                    <a class="save" style="display: none;" onclick="document.querySelector('.sendInput').click()"><img src="/images/adminImage/save.svg" alt=""></a>
+                </td>
+                <td>
+                    <a asp-action="delete" asp-route-id="@item.Id" class="delete"><img src="/images/adminImage/delete.svg" alt=""></a>
+                    <a href="#" style="display: none;" class="closeEdit"><img src="/images/adminImage/close.svg" alt=""></a>
+                </td>
+                <input type="submit" class="sendInput" style="display:none" />
+            </tr>
+            </form>
+        }
+    </tbody>
+</table>
+<a href="#" class="addblock">
+    <img src="/images/adminImage/add.svg" alt="">
+</a>
+
+<div class="addblock-settings">
+    <form class="addblock-form" asp-action="Save" asp-controller="Admin">
+        <div class="write-info">
+            <label class="addblock-settings__category-name">Категория</label>
+            <select class="addblock-settings__category CategoriesName" asp-for="Product.CategoriesName">
+                <option value="pizza">Пицца</option>
+                <option value="rool">Роллы</option>
+            </select>
+            <label class="addblock-settings__name-name">Название</label>
+            <input type="text" class="addblock-settings__name name" asp-for="Product.Name">
+            <label class="addblock-settings__price-name">Цена</label>
+            <input type="text" class="addblock-settings__price price" asp-for="Product.Price">
+        </div>
+
+
+        <a class="addFile" onclick="document.querySelector('.fileImage').click()">Фото не выбрано</a>
+        <input type="file" style="display:none" class="fileImage" />
+
+        <div class="addblock-settings__decide">
+            <a href="#" class="close"><img src="/images/adminImage/close.svg"></a>
+            <a href="#" class="save" onclick="document.querySelector('.saveInput').click()"><img src="/images/adminImage/save.svg"></a>
+            <input type="submit" style="display:none" class="saveInput" />
+            <input type="text" class="imagePath-input" asp-for="Product.ImgPath" style="display:none" />
+        </div>
+    </form>
+</div>
+
+
+
+<script>
+
+    // При нажатии на кнопку редактирования
+    const editBlockSet = document.querySelectorAll(".edit").forEach((e) => {
+        e.addEventListener("click", async c => {
+
+            const elements = c.target.parentNode.parentNode.parentNode.childNodes
+            elements[5].lastElementChild.style.display = "flex"
+            elements[5].lastElementChild.style.justifyContent = "center"
+            elements[5].firstElementChild.style.display = "none"
+
+            elements[3].lastElementChild.style.display = "inherit"
+            elements[3].lastElementChild.value = elements[3].firstElementChild.textContent
+            elements[3].firstElementChild.style.display = "none"
+
+            elements[7].lastElementChild.style.display = "inherit"
+            elements[7].lastElementChild.value = elements[7].firstElementChild.textContent
+            elements[7].firstElementChild.style.display = "none"
+
+
+            elements[9].firstElementChild.style.display = "none"
+            elements[9].childNodes[3].style.display = "block"
+
+            elements[11].firstElementChild.style.display = "none"
+            elements[11].childNodes[3].style.display = "block"
+
+            // При нажатии на кнопку "закрыть"
+            document.querySelectorAll(".closeEdit").forEach((e) => {
+                e.addEventListener("click", async c => {
+                    elements[3].firstElementChild.style.display = "block"
+                    elements[3].firstElementChild.style.display = "none"
+                    elements[3].childNodes[1].style.display = "block"
+                    elements[3].childNodes[3].style.display = "none"
+
+                    elements[7].firstElementChild.style.display = "block"
+                    elements[7].firstElementChild.style.display = "none"
+                    elements[7].childNodes[1].style.display = "block"
+                    elements[7].childNodes[3].style.display = "none"
+
+                    elements[5].firstElementChild.style.display = "inline-block"
+                    elements[5].childNodes[3].style.display = "none"
+
+
+                    elements[9].firstElementChild.classList.replace("saveEdit", "edit")
+                    elements[9].firstElementChild.style.display = "block"
+                    elements[9].childNodes[3].style.display = "none"
+
+                    elements[11].firstElementChild.style.display = "block"
+                    elements[11].childNodes[3].style.display = "none"
+                })
+            })
+        })
+    })
+</script>
+
+<script>
+    var imagePath;
+    var buttonFile = document.querySelector(".addFile")
+
+    document.querySelector(".file").addEventListener("change", async e => {
+        const file = e.target.files[0]
+        if(!file || !file.type.match(/image.*/)) return
+
+        var formData = new FormData()
+        formData.append("image", file)
+
+        const response = await fetch("https://api.imageban.ru/v1", {
+            method : "POST",
+            body : formData,
+            headers: {
+                "Accept" : "application/json",
+                "Authorization": "TOKEN " + "NzspDu1dS8jc0LTGcJXo"
+            }
+        })
+        if (response.ok == true) {
+            const data = await response.json()
+            imagePath = data.data.link
+            buttonFile.style.backgroundImage = `url("${imagePath}")`
+            buttonFile.textContent = ""
+            document.querySelector(".imgPath").value = imagePath
+        }
+    })
+</script>
+
+<script>
+    // Настройка сайдбара
+    const arrowSideBar = document.querySelector(".sideBarArrow")
+    const sidebar = document.querySelector(".sidebar")
+    arrowSideBar.addEventListener("click", async e => {
+        e.preventDefault()
+        arrowSideBar.classList.toggle("open")
+        sidebar.classList.toggle("open")
+    })
+
+    // Настройка открытия и закрытия окна добавления контента
+    const addBlockSet = document.querySelector(".addblock-settings")
+
+    document.querySelector(".addblock").addEventListener("click", async e => {
+        addBlockSet.classList.add("open")
+    })
+    document.querySelector(".close").addEventListener("click", async e => {
+        addBlockSet.classList.remove("open")
+    })
+</script>

@@ -1,0 +1,40 @@
+﻿@{
+    Layout = "/Views/Shared/_Layout.cshtml";
+}
+@using Pizza.Context;
+@model PizzaProjectContext;
+
+<link rel="stylesheet" href="css/actions.css">
+
+<div class="actions">
+    <div class="actions-items">
+        
+        @foreach(var res in Model.PromoActions)
+        {
+            <div class="item">
+                <div class="item-image">
+                    <img src="@res.TitleImg" alt="">
+                </div>
+                <div class="item-text">
+                    @res.Content
+                </div>
+                <div class="item-title">
+                    <h2>Подробнее</h2>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+
+
+
+
+<script>
+    document.querySelectorAll(".item-title").forEach((e) => {
+        e.addEventListener("click", async c => {
+            c.target.parentNode.parentNode.childNodes[3].classList.toggle("open")
+            console.log(c.target)
+        })
+    })
+</script>

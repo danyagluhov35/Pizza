@@ -19,6 +19,8 @@ namespace Pizza.Context
 
         public virtual DbSet<Category> Categories { get; set; } = null!;
         public virtual DbSet<Product> Products { get; set; } = null!;
+        public virtual DbSet<PromoAction> PromoActions { get; set; } = null!;
+        public virtual DbSet<Slider> Sliders { get; set; } = null!;
         public virtual DbSet<User> Users { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -57,6 +59,28 @@ namespace Pizza.Context
                     .WithMany(p => p.Products)
                     .HasForeignKey(d => d.CategoriesName)
                     .HasConstraintName("FK_Product_Categories");
+            });
+
+            modelBuilder.Entity<PromoAction>(entity =>
+            {
+                entity.ToTable("PromoAction");
+
+                entity.Property(e => e.Href).HasMaxLength(500);
+
+                entity.Property(e => e.Name).HasMaxLength(80);
+            });
+
+            modelBuilder.Entity<Slider>(entity =>
+            {
+                entity.ToTable("Slider");
+
+                entity.Property(e => e.Href)
+                    .HasMaxLength(150)
+                    .HasColumnName("href");
+
+                entity.Property(e => e.ImgPath)
+                    .HasMaxLength(150)
+                    .HasColumnName("imgPath");
             });
 
             modelBuilder.Entity<User>(entity =>

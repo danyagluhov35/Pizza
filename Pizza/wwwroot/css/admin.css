@@ -242,7 +242,7 @@ h2 {
 .addblock-settings__decide {
     position: absolute;
     right: 10px;
-    bottom: 5px;
+    bottom: 0;
 }
 
 .save {
@@ -319,3 +319,89 @@ h2 {
     .input-file input[type=file]:disabled + span {
         background-color: #eee;
     }
+
+
+/*----- Слайд -----*/
+
+.window__settings-main {
+    margin-top: 30px;
+}
+
+.slide-grid {
+    display: grid;
+    grid-gap: 50px;
+    grid-template-columns: repeat(auto-fill, minmax(150px,1fr));
+}
+
+.slide-item {
+    z-index: 20;
+}
+
+.slide-block {
+    position: relative;
+}
+
+    .slide-block:hover {
+        background-color: #000000;
+        opacity: 0.4;
+    }
+
+    .slide-block img {
+        width: 100%;
+        object-fit: contain;
+    }
+
+.slide-block__delete {
+    text-align: center;
+    background-color: #760f0f;
+    font-size: 16px;
+    letter-spacing: 3px;
+    color: #fff;
+    width: 100%;
+    display: block;
+    padding: 6px 0;
+    font-weight: 600;
+}
+
+.slide-block__save {
+    text-align: center;
+    background-color: #0f763a;
+    font-size: 16px;
+    letter-spacing: 3px;
+    color: #fff;
+    width: 100%;
+    display: block;
+    padding: 6px 0;
+    font-weight: 600;
+}
+
+.slide-item__add {
+    background-color: #cbcbcb;
+}
+
+    .slide-item__add:hover {
+    }
+
+.slide-item__add {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.add {
+    width: 70px;
+    fill: #fff;
+}
+
+.editSlide {
+    position: absolute;
+    width: 50%;
+    height: 50%;
+    top: 25%;
+    left: 25%;
+    margin: 0 auto;
+}
+.input-file span{
+    width:100%;
+    margin-bottom:10px;
+}
