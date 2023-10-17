@@ -33,13 +33,13 @@
     <tbody>
         @foreach (var item in Model.products)
         {
-            <form asp-action="Edit" asp-controller="Admin">
+            <form asp-action="Edit">
             <tr id="@item.Id">
                 <input class="idInput" style="display:none" asp-for="Product.Id" value="@item.Id" />
                 <td>@item.Id</td>
                 <td>
                     <p>@item.Name</p>
-                    <input class="editNameInput" asp-for="Product.Name" type="text" style="display: none;" />
+                    <input class="editNameInput" asp-for="Product.Name" value="@item.Name" type="text" style="display: none;" />
                 </td>
                 <td>
                     <img src="@item.ImgPath" alt="" class="item-image">
@@ -51,17 +51,16 @@
                 </td>
                 <td>
                     <p>@item.Price</p>
-                    <input class="editPriceInput" asp-for="Product.Price" type="text" style="display: none;" />
+                    <input class="editPriceInput" asp-for="Product.Price" value="@item.Price" type="text" style="display: none;" />
                 </td>
                 <td>
                     <a href="#" class="edit"><img src="/images/adminImage/edit.svg" alt=""></a>
-                    <a class="save" style="display: none;" onclick="document.querySelector('.sendInput').click()"><img src="/images/adminImage/save.svg" alt=""></a>
+                    <input type="submit" class="save" value="" style="display:none">
                 </td>
                 <td>
                     <a asp-action="delete" asp-route-id="@item.Id" class="delete"><img src="/images/adminImage/delete.svg" alt=""></a>
                     <a href="#" style="display: none;" class="closeEdit"><img src="/images/adminImage/close.svg" alt=""></a>
                 </td>
-                <input type="submit" class="sendInput" style="display:none" />
             </tr>
             </form>
         }
@@ -72,7 +71,7 @@
 </a>
 
 <div class="addblock-settings">
-    <form class="addblock-form" asp-action="Save" asp-controller="Admin">
+    <form class="addblock-form" asp-action="Save">
         <div class="write-info">
             <label class="addblock-settings__category-name">Категория</label>
             <select class="addblock-settings__category CategoriesName" asp-for="Product.CategoriesName">
@@ -112,11 +111,11 @@
             elements[5].firstElementChild.style.display = "none"
 
             elements[3].lastElementChild.style.display = "inherit"
-            elements[3].lastElementChild.value = elements[3].firstElementChild.textContent
+            //elements[3].lastElementChild.value = elements[3].firstElementChild.textContent
             elements[3].firstElementChild.style.display = "none"
 
             elements[7].lastElementChild.style.display = "inherit"
-            elements[7].lastElementChild.value = elements[7].firstElementChild.textContent
+            //elements[7].lastElementChild.value = elements[7].firstElementChild.textContent
             elements[7].firstElementChild.style.display = "none"
 
 
@@ -159,28 +158,32 @@
     var imagePath;
     var buttonFile = document.querySelector(".addFile")
 
-    document.querySelector(".file").addEventListener("change", async e => {
-        const file = e.target.files[0]
-        if(!file || !file.type.match(/image.*/)) return
+    document.querySelectorAll(".file").forEach((c) => {
+        c.addEventListener("change", async e => {
+            const file = e.target.files[0]
+            if (!file || !file.type.match(/image.*/)) return
 
-        var formData = new FormData()
-        formData.append("image", file)
+            var formData = new FormData()
+            formData.append("image", file)
 
-        const response = await fetch("https://api.imageban.ru/v1", {
-            method : "POST",
-            body : formData,
-            headers: {
-                "Accept" : "application/json",
-                "Authorization": "TOKEN " + "NzspDu1dS8jc0LTGcJXo"
+            const response = await fetch("https://api.imageban.ru/v1", {
+                method: "POST",
+                body: formData,
+                headers: {
+                    "Accept": "application/json",
+                    "Authorization": "TOKEN " + "NzspDu1dS8jc0LTGcJXo"
+                }
+            })
+            if (response.ok == true) {
+                const data = await response.json()
+                imagePath = data.data.link
+                buttonFile.style.backgroundImage = `url("${imagePath}")`
+                buttonFile.textContent = ""
+                document.querySelectorAll(".imgPath").forEach((e) => {
+                    e.value = imagePath
+                })
             }
         })
-        if (response.ok == true) {
-            const data = await response.json()
-            imagePath = data.data.link
-            buttonFile.style.backgroundImage = `url("${imagePath}")`
-            buttonFile.textContent = ""
-            document.querySelector(".imgPath").value = imagePath
-        }
     })
 </script>
 

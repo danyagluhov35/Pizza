@@ -246,7 +246,14 @@ h2 {
 }
 
 .save {
-    margin-left: 5px;
+    display:block;
+    max-width:30px;
+    width:100%;
+    background:url(../images/adminImage/save.svg);
+    background-repeat:no-repeat;
+    border:none;
+    height:30px;
+    margin: 0 auto;
 }
 
 

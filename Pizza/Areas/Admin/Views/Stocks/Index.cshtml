@@ -1,1 +1,146 @@
-﻿
+﻿@{
+    Layout = "/Areas/Admin/Views/Shared/_Layout2.cshtml";
+}
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@using Pizza.Models;
+@model SlideViewModel;
+
+<link rel="stylesheet" href="~/css/slide.css">
+<script src="https://cdn.ckeditor.com/ckeditor5/40.0.0/classic/ckeditor.js"></script>
+<script src="https://ckeditor.com/apps/ckfinder/3.5.1/ckfinder.js"></script>
+
+<div class="slide-grid">
+    @foreach (var item in Model.PromoActions)
+    {
+        <div class="slide-item">
+            <div class="slide-block">
+                <img src="@item.TitleImg" alt="">
+                <a href="#" class="editSlide">
+                    <img src="/images/adminImage/edit.svg">
+                </a>
+            </div>
+            <label class="input-file" style="display: none;">
+                <input class="file" type="file" />
+                <span>Выберите файл</span>
+                <input type="text" class="imgPath" value="" style="display: none;">
+            </label>
+            <a href="#" class="slide-block__delete">Удалить</a>
+            <a href="#" class="slide-block__save" style="display: none;">Сохранить</a>
+        </div>
+    }
+    <a class="slide-item__add">
+        <img src="/images/adminImage/add.svg" alt="" class="add">
+    </a>
+</div>
+
+<div class="window-settings">
+    <div class="block-input">
+        <div class="stock-image block">
+            <label class="main-image__title">Основное изображение</label>
+            <label class="main-image__input">
+                <input class="file" type="file" />
+                <span>Выберите файл</span>
+                <input type="text" class="main-image__file" value="" style="display: none;">
+            </label>
+        </div>
+
+        <div class="stock-input block">
+            <label class="stock-name__title">Название акции</label>
+            <input type="text" class="stock-name__input">
+        </div>
+
+        <div class="stock-link block">
+            <label class="stock-link__title">Ссылка на акцию</label>
+            <input type="text" class="stock-link__inut">
+        </div>
+    </div>
+    <div class="block-ckeditor">
+        <textarea name="editor" id="editor"></textarea>
+    </div>
+    <div class="addblock-settings__decide">
+        <a href="#" class="closeSlide"><img src="/images/adminImage/close.svg"></a>
+        <a href="#" class="saveSlide" onclick="document.querySelector('.saveInput').click()"><img src="/images/adminImage/save.svg"></a>
+        <input type="submit" style="display:none" class="saveInput" />
+        <input type="text" class="imagePath-input" style="display:none" />
+    </div>
+</div>
+
+
+
+<script>
+    // Настройка сайдбара
+    const arrowSideBar = document.querySelector(".sideBarArrow")
+    const sidebar = document.querySelector(".sidebar")
+    arrowSideBar.addEventListener("click", async e => {
+        e.preventDefault()
+        arrowSideBar.classList.toggle("open")
+        sidebar.classList.toggle("open")
+    })
+
+    // Настройка открытия и закрытия окна добавления контента
+    const addBlockSet = document.querySelector(".addblock-settings")
+
+    document.querySelector(".addblock").addEventListener("click", async e => {
+        addBlockSet.classList.add("open")
+    })
+    document.querySelector(".close").addEventListener("click", async e => {
+        addBlockSet.classList.remove("open")
+    })
+</script>
+
+
+
+<script>
+    document.querySelector(".slide-block").addEventListener("click", async e => {
+        const elements = e.target.parentNode.parentNode.parentNode.childNodes
+
+
+        elements[1].style.display = "none"
+        elements[3].style.display = "block"
+
+        elements[5].style.display = "none"
+        elements[7].style.display = "block"
+
+    })
+</script>
+
+
+
+
+<script>
+    // CKEditor
+    ClassicEditor
+        .create(document.querySelector('#editor'), {
+            ckfinder: {
+                uploadUrl: '/ckfinder/core/connector/aspx?command=QuickUpload&type=Files&responseType=json'
+            },
+            toolbar: {
+                items: [
+                    'ckfinder', 'undo', 'redo',
+                    '|', 'heading',
+                    '|', 'fontfamily', 'fontsize', 'fontColor', 'fontBackgroundColor',
+                    '|', 'bold', 'italic', 'strikethrough', 'subscript', 'superscript', 'code',
+                    '|', 'link', 'blockQuote', 'codeBlock',
+                    '|', 'bulletedList', 'numberedList', 'todoList', 'outdent', 'indent'
+                ]
+            }
+        })
+        .then(editor => {
+            console.log('Editor was initialized', editor);
+        })
+        .catch(error => {
+            console.error(error.stack);
+        });
+</script>
+
+
+<script>
+    const addBlockSlide = document.querySelector(".window-settings")
+
+    document.querySelector(".slide-item__add").addEventListener("click", async e => {
+        addBlockSlide.classList.add("open")
+    })
+    document.querySelector(".close").addEventListener("click", async e => {
+        addBlockSlide.classList.remove("open")
+    })
+</script>

@@ -25,7 +25,7 @@ namespace Pizza.Areas.Admin.Controllers
                 productModel.products = db.Products.Where(u => u.CategoriesName == productName);
             return View(productModel);
         }
-        [Route("/save")]
+        [Route("save")]
         [HttpPost]
         public IActionResult Save(ProductModel product)
         {
@@ -38,7 +38,7 @@ namespace Pizza.Areas.Admin.Controllers
 
             return RedirectToAction("Index", new { productName = product.CategoriesName });
         }
-        [Route("/delete")]
+        [Route("delete")]
         public async Task<IActionResult> Delete(int id)
         {
             Product? pizzaContext = await db.Products.FirstOrDefaultAsync(p => p.Id == id);

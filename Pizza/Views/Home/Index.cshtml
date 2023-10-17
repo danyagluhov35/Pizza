@@ -11,10 +11,10 @@
     <div class="main">
         <div class="swiper">
             <div class="swiper-wrapper">
-                <div class="swiper-slide"><img src="images/mainImage/sliderImage-1.jpg" alt=""></div>
-                <div class="swiper-slide"><img src="images/mainImage/sliderImage-1.jpg" alt=""></div>
-                <div class="swiper-slide"><img src="images/mainImage/sliderImage-1.jpg" alt=""></div>
-                <div class="swiper-slide"><img src="images/mainImage/pizzzzaaaaaaaa.jpg" alt=""></div>
+                @foreach (var item in Model.PromoActions)
+                {
+                    <div class="swiper-slide"><img src="@item.TitleImg" alt=""></div>
+                }
             </div>
         </div>
     </div>

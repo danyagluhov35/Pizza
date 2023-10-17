@@ -9,7 +9,7 @@ namespace Pizza.Controllers
         public HomeController(PizzaProjectContext db) => this.db = db;
         public IActionResult Index()
         {
-            return View(db);
+            return View(db.Products);
         }
     }
 }
