@@ -1,7 +1,9 @@
-﻿namespace Pizza.Domain.Repositories.Factories
+﻿using Pizza.Domain.IService;
+
+namespace Pizza.Domain.Repositories.Factories
 {
     public abstract class ProductFactory
     {
-        public abstract IProduct CreateProduct();
+        public abstract IProductService Create(string name, int price, string imgPath, string categoryName);
     }
 }

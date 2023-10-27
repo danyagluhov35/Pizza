@@ -2,97 +2,96 @@
     Layout = "/Areas/Admin/Views/Shared/_Layout2.cshtml";
 }
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
-@using Pizza.Models;
-@model ProductsViewModel;
-
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-
-</body>
-</html>
+@using Pizza.Models.ViewModels;
+@model ProductViewModel;
+<link rel="stylesheet" href="~/css/Admin/adminProduct.css" />
+<link rel="stylesheet" href="~/css/Input/inputFile.css">
 
 
 
-<table>
-    <thead>
-        <tr>
-            <td>Id</td>
-            <td>Название</td>
-            <td>Изображение</td>
-            <td>Цена</td>
-            <td colspan="2">Действие</td>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model.products)
-        {
-            <form asp-action="Edit">
-            <tr id="@item.Id">
-                <input class="idInput" style="display:none" asp-for="Product.Id" value="@item.Id" />
-                <td>@item.Id</td>
-                <td>
-                    <p>@item.Name</p>
-                    <input class="editNameInput" asp-for="Product.Name" value="@item.Name" type="text" style="display: none;" />
-                </td>
-                <td>
-                    <img src="@item.ImgPath" alt="" class="item-image">
-                    <label class="input-file" style="display: none;">
-                        <input class="file" type="file" />
-                        <span>Выберите файл</span>
-                        <input type="text" class="imgPath" asp-for="Product.ImgPath" value="@item.ImgPath">
-                    </label>
-                </td>
-                <td>
-                    <p>@item.Price</p>
-                    <input class="editPriceInput" asp-for="Product.Price" value="@item.Price" type="text" style="display: none;" />
-                </td>
-                <td>
-                    <a href="#" class="edit"><img src="/images/adminImage/edit.svg" alt=""></a>
-                    <input type="submit" class="save" value="" style="display:none">
-                </td>
-                <td>
-                    <a asp-action="delete" asp-route-id="@item.Id" class="delete"><img src="/images/adminImage/delete.svg" alt=""></a>
-                    <a href="#" style="display: none;" class="closeEdit"><img src="/images/adminImage/close.svg" alt=""></a>
-                </td>
+
+@if(Model.Product.CategoriesName != null)
+{
+    <table>
+        <thead>
+            <tr>
+                <td>Id</td>
+                <td>Название</td>
+                <td>Изображение</td>
+                <td>Цена</td>
+                <td colspan="2">Действие</td>
             </tr>
-            </form>
-        }
-    </tbody>
-</table>
-<a href="#" class="addblock">
-    <img src="/images/adminImage/add.svg" alt="">
-</a>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.products)
+            {
+                <form asp-action="Edit">
+                <tr id="@item.Id">
+                    <input class="idInput" style="display:none" asp-for="Product.Id" value="@item.Id" />
+                    <td>@item.Id</td>
+                    <td>
+                        <p>@item.Name</p>
+                        <input class="editNameInput" asp-for="Product.Name" value="@item.Name" type="text" style="display: none;" />
+                    </td>
+                    <td>
+                        <img src="@item.ImgPath" alt="" class="item-image">
+                        <label class="input-file" style="display: none;">
+                            <input class="file" type="file" />
+                            <span>Выберите файл</span>
+                            <input type="text" class="imgPath" asp-for="Product.ImgPath" value="@item.ImgPath" style="display:none">
+                        </label>
+                    </td>
+                    <td>
+                        <p>@item.Price</p>
+                        <input class="editPriceInput" asp-for="Product.Price" value="@item.Price" type="text" style="display: none;" />
+                    </td>
+                    <td>
+                        <a href="#" class="edit"><img src="/images/adminImage/edit.svg" alt=""></a>
+                        <input type="submit" class="save" value="" style="display:none">
+                    </td>
+                    <td>
+                        <a asp-action="delete" asp-route-id="@item.Id" class="delete"><img src="/images/adminImage/delete.svg" alt=""></a>
+                        <a href="#" style="display: none;" class="closeEdit"><img src="/images/adminImage/close.svg" alt=""></a>
+                    </td>
+                </tr>
+                </form>
+            }
+        </tbody>
+    </table>
+    <a href="#" class="addblock">
+        <img src="/images/adminImage/add.svg" alt="">
+    </a>
+}
 
-<div class="addblock-settings">
-    <form class="addblock-form" asp-action="Save">
-        <div class="write-info">
-            <label class="addblock-settings__category-name">Категория</label>
-            <select class="addblock-settings__category CategoriesName" asp-for="Product.CategoriesName">
-                <option value="pizza">Пицца</option>
-                <option value="rool">Роллы</option>
-            </select>
-            <label class="addblock-settings__name-name">Название</label>
-            <input type="text" class="addblock-settings__name name" asp-for="Product.Name">
-            <label class="addblock-settings__price-name">Цена</label>
-            <input type="text" class="addblock-settings__price price" asp-for="Product.Price">
+<div class="window-settings">
+    <form asp-action="Save" asp-controller="Products" asp-area="Admin">
+        <div class="block-input">
+            <div class="input-values">
+                <label class="input-file">
+                    <span class="error-image"></span>
+                    <input type="file" class="image">
+                    <span class="choice-file">Основное изображение</span>
+                    <input type="text" class="main-image__file" style="display:none;" asp-for="Product.ImgPath">
+                </label>
+
+                <select class="select-category" asp-for="Product.CategoriesName">
+                    <option value="pizza">Пицца</option>
+                    <option value="roll">Роллы</option>
+                </select>
+
+                <span class="error-href"></span>
+                <input type="text" class="nameProduct" placeholder="Название" asp-for="Product.Name">
+
+                <span class="error-content"></span>
+                <input type="text" class="priceProduct" placeholder="Цена" asp-for="Product.Price">
+            </div>
+            <div class="image-choice">
+                <span>Изображение</span>
+            </div>
         </div>
-
-
-        <a class="addFile" onclick="document.querySelector('.fileImage').click()">Фото не выбрано</a>
-        <input type="file" style="display:none" class="fileImage" />
-
-        <div class="addblock-settings__decide">
-            <a href="#" class="close"><img src="/images/adminImage/close.svg"></a>
-            <a href="#" class="save" onclick="document.querySelector('.saveInput').click()"><img src="/images/adminImage/save.svg"></a>
-            <input type="submit" style="display:none" class="saveInput" />
-            <input type="text" class="imagePath-input" asp-for="Product.ImgPath" style="display:none" />
+        <div class="action-btn">
+            <button class="close">Закрыть</button>
+            <button class="save">Сохранить</button>
         </div>
     </form>
 </div>
@@ -155,6 +154,7 @@
 </script>
 
 <script>
+    // При нажатии на реадктирование продукта
     var imagePath;
     var buttonFile = document.querySelector(".addFile")
 
@@ -188,22 +188,42 @@
 </script>
 
 <script>
-    // Настройка сайдбара
-    const arrowSideBar = document.querySelector(".sideBarArrow")
-    const sidebar = document.querySelector(".sidebar")
-    arrowSideBar.addEventListener("click", async e => {
-        e.preventDefault()
-        arrowSideBar.classList.toggle("open")
-        sidebar.classList.toggle("open")
-    })
+    // Для окна добавления, когда добавляете файл
+    var imagePath;
 
+    document.querySelector(".image").addEventListener("change", async e => {
+        const file = e.target.files[0]
+        if (!file || !file.type.match(/image.*/)) return
+        var formData = new FormData()
+        formData.append("image", file)
+
+        const response = await fetch("https://api.imageban.ru/v1", {
+            method: "POST",
+            body: formData,
+            headers: {
+                "Accept": "application/json",
+                "Authorization": "TOKEN " + "NzspDu1dS8jc0LTGcJXo"
+            }
+        })
+        if (response.ok == true) {
+            const data = await response.json()
+            imagePath = data.data.link
+            console.log(imagePath)
+            document.querySelector(".image-choice").style.backgroundImage = `url("${imagePath}")`
+            document.querySelector(".main-image__file").value = imagePath
+        }
+    })
+</script>
+
+<script>
     // Настройка открытия и закрытия окна добавления контента
-    const addBlockSet = document.querySelector(".addblock-settings")
+    const addBlockSet = document.querySelector(".window-settings")
 
     document.querySelector(".addblock").addEventListener("click", async e => {
         addBlockSet.classList.add("open")
     })
     document.querySelector(".close").addEventListener("click", async e => {
+        e.preventDefault();
         addBlockSet.classList.remove("open")
     })
 </script>

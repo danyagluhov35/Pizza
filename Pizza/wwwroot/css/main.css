@@ -1,94 +1,12 @@
-﻿@import url('https://fonts.googleapis.com/css2?family=Kelly+Slab&display=swap');
-
-
-li {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-}
-
-a {
-    text-decoration: none;
-    margin: 0;
-    padding: 0;
-}
-
-ul {
-    margin: 0;
-    padding: 0;
-}
-
-body {
-    background-color: rgb(255, 255, 255);
-}
-
-.wrapper {
-    
-}
-
-.container {
-    max-width: 1180px;
-    padding: 0 10px;
-    margin: 0 auto;
-}
-
-.header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 40px;
-}
-
-.logo {
-    margin-right: 90px;
-    display: block;
-    position: relative;
-    padding: 0 0 11.9% 13.6%;
-}
-
-    .logo img {
-        width: 100%;
-        height: 100%;
-        position: absolute;
-        left: 0;
-        bottom: 0;
-        object-fit: cover;
-    }
-
-.basket {
-}
-
-    .basket img {
-        width: 40px;
-        height: 40px;
-    }
-
-.navigation {
-    width: 100%;
-}
-
-.menu {
-    display: flex;
-}
-
-.btn__list {
-}
-
-    .btn__list a {
-        color: #000000;
-        font-size: 25px;
-        margin-right: 35px;
-    }
-
-        .btn__list a:hover {
-            border-bottom: 2px solid #009944;
-        }
-
+﻿
+/*----- Стилизация слайдера -----*/
 .swiper {
+    width:100%;
+    height:100%;
 }
 
 .swiper-wrapper {
-    display: grid;
+    display:flex;
     grid-gap: 10px;
 }
 
@@ -97,15 +15,15 @@ body {
     padding: 0px 0px 33.9% 0px;
 }
 
-    .swiper-slide img {
-        width: 100%;
-        height: 100%;
-        position: absolute;
-        object-fit: cover;
-        left: 0;
-        bottom: 0;
-    }
+.swiper-slide img {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+}
 
+/*----- Стилизация блока вывода продукта -----*/
 .product__name {
     font-size: 42px;
     margin: 40px 0 20px 0;
@@ -144,12 +62,13 @@ body {
     border-radius: 20px;
     border: 1px solid #000;
     background: none;
-
-    
 }
+
 .btn__send:hover {
     background: #E8E5E5;
 }
+
+/*----- Стилизация  footer------*/
 footer {
     background-color: #EFEFEF;
     padding: 50px 0;

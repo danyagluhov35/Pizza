@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Pizza.Context;
+using Pizza.Models;
+using Pizza.Models.Context;
+using Pizza.Models.ViewModels;
 
 namespace Pizza.Controllers
 {
@@ -7,9 +9,11 @@ namespace Pizza.Controllers
     {
         private PizzaProjectContext _db;
         public StocksController(PizzaProjectContext db) => _db = db;
+        
         public IActionResult Index()
         {
-            return View(_db.PromoActions);
+            PromoViewModel promoModel = new PromoViewModel() { PromoActions = _db.PromoActions };
+            return View(promoModel);
         }
     }
 }

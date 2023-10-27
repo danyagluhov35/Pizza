@@ -1,11 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Pizza.Context;
-using Pizza.Context.Entities;
 using Pizza.Domain.Repositories;
 using Pizza.Domain.Repositories.Factories;
 using Pizza.Models;
+using Pizza.Models.Context;
 using Pizza.Models.ViewModels;
 
 namespace Pizza.Areas.Admin.Controllers
@@ -15,29 +14,46 @@ namespace Pizza.Areas.Admin.Controllers
     public class ProductsController : Controller
     {
         PizzaProjectContext db;
-        public ProductsController(PizzaProjectContext db) => this.db = db;
+        public ProductsController(PizzaProjectContext db)
+        {
+            this.db = db;
+        }
+
         [Route("products")]
         public IActionResult Index(string productName)
         {
-            ProductsViewModel productModel = new ProductsViewModel();
+            ProductViewModel productModel = new ProductViewModel();
 
             if (productName != null)
+            {
                 productModel.products = db.Products.Where(u => u.CategoriesName == productName);
+                productModel.Product.CategoriesName = productName;
+            }
             return View(productModel);
         }
-        [Route("save")]
+
+        [Route("Admin/Products/Save")]
         [HttpPost]
-        public IActionResult Save(ProductModel product)
+        public IActionResult Save(Product product)
         {
-            ProductFactory productFactory;
-
-            productFactory = new ProductFactoryPizza(product.Name!, product.Price, product.ImgPath);
-            IProduct pizza = productFactory.CreateProduct();
-            db.Products.Add(new Product() { Name = pizza.Name, ImgPath = pizza.GetImagePath(), CategoriesName = product.CategoriesName, Price = pizza.GetPrice() });
-            db.SaveChanges();
-
+            if (ModelState.IsValid)
+            {
+                if(product.CategoriesName == "pizza") 
+                { 
+                    ProductFactory productPizza = new ProductFactoryPizza();
+                    ProductCreate productCreate = new(productPizza.Create(product.Name!, product.Price, product.ImgPath!, product.CategoriesName));
+                    productCreate.CreateProduct();
+                }
+                else
+                {
+                    ProductFactory productRoll = new ProductFactoryRoll();
+                    ProductCreate productCreate = new(productRoll.Create(product.Name!, product.Price, product.ImgPath!, product.CategoriesName!));
+                    productCreate.CreateProduct();
+                }
+            }
             return RedirectToAction("Index", new { productName = product.CategoriesName });
         }
+
         [Route("delete")]
         public async Task<IActionResult> Delete(int id)
         {
@@ -47,22 +63,20 @@ namespace Pizza.Areas.Admin.Controllers
                 db.Products.Remove(pizzaContext);
                 await db.SaveChangesAsync();
             }
-            return RedirectToAction("Index", new { productName = pizzaContext.CategoriesName });
+            return RedirectToAction("Index", new { productName = pizzaContext?.CategoriesName });
         }
+
         [Route("edit")]
-        public async Task<IActionResult> Edit(ProductModel product)
+        public async Task<IActionResult> Edit(Product product)
         {
-            Product? productData = new();
-            if (ModelState.IsValid)
+            Product? productData = await db.Products.FirstOrDefaultAsync(p => p.Id == product.Id);
+            if (productData != null)
             {
-                productData = await db.Products.FirstOrDefaultAsync(p => p.Id == product.Id);
-                productData.Name = product.Name;
-                productData.Price = product.Price;
-                productData.ImgPath = product.ImgPath;
+                productData = new Product() { Name = product.Name, Price = product.Price, ImgPath = product.ImgPath };
                 db.Products.Update(productData);
                 db.SaveChanges();
             }
-            return RedirectToAction("Index", new { productName = productData.CategoriesName });
+            return RedirectToAction("Index", new { productName = productData?.CategoriesName });
         }
     }
 }

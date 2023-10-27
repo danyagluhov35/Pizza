@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Pizza.Context;
+using Microsoft.EntityFrameworkCore;
+using Pizza.Models.Context;
+using Pizza.Models.ViewModels;
 
 namespace Pizza.Controllers
 {
@@ -9,7 +11,8 @@ namespace Pizza.Controllers
         public HomeController(PizzaProjectContext db) => this.db = db;
         public IActionResult Index()
         {
-            return View(db.Products);
+            IndexViewModel indexModel = new() { products = db.Products, promoActions = db.PromoActions, Categories = db.Categories.Include(c => c.Products) };
+            return View(indexModel);
         }
     }
 }

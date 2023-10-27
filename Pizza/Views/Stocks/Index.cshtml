@@ -1,22 +1,20 @@
 ﻿@{
     Layout = "/Views/Shared/_Layout.cshtml";
 }
-@using Pizza.Context;
-@model PizzaProjectContext;
-
-<link rel="stylesheet" href="css/actions.css">
+@using Pizza.Models.ViewModels;
+@model PromoViewModel;
+<link rel="stylesheet" href="~/css/slide.css">
 
 <div class="actions">
     <div class="actions-items">
-        
         @foreach(var res in Model.PromoActions)
         {
-            <div class="item">
-                <div class="item-image">
+            <div class="item-action">
+                <div class="item-action-image">
                     <img src="@res.TitleImg" alt="">
                 </div>
                 <div class="item-text">
-                    @res.Content
+                    @Html.Raw(res.Content)
                 </div>
                 <div class="item-title">
                     <h2>Подробнее</h2>

@@ -1,0 +1,176 @@
+﻿
+.desc {
+    text-align: center;
+    color: #ffffff;
+    font-size: 18px;
+}
+
+thead tr td:nth-child(5) {
+    font-weight: 600;
+    padding: 20px;
+}
+
+table {
+    
+    font-size: 18px;
+    color: #fff;
+}
+
+td {
+    text-align: center;
+}
+
+tbody {
+    font-size: 14px;
+}
+
+    tbody tr td:nth-child(1) {
+        width: 39px;
+        padding: 20px 0;
+    }
+
+    tbody tr td:nth-child(2) {
+        width: 343px;
+    }
+
+    tbody tr td:nth-child(3) {
+        width: 178px;
+    }
+
+    tbody tr td:nth-child(4) {
+        width: 165px;
+    }
+
+    tbody tr:nth-child(even) {
+        background-color: #A4918E;
+    }
+
+h2 {
+    padding: 0;
+    margin: 0;
+}
+
+
+
+.addblock {
+    width: 47px;
+    height: 34px;
+    background-color: #F55A2E;
+    position: absolute;
+    right: 0;
+    bottom: -39px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.addblock img {
+    object-fit: contain;
+}
+
+/*----- Для окна добавления контента -----*/
+
+p {
+    margin: 0;
+}
+
+body {
+    margin: 0 auto;
+}
+
+.window-settings {
+    width:100%;
+    background-color: #E75329;
+    display:none;
+}
+.window-settings.open {
+    width: 100%;
+    background-color: #E75329;
+    display: block;
+}
+
+form {
+    position: relative;
+    padding-bottom: 50px;
+}
+
+.block-input {
+    display: flex;
+}
+
+.input-values {
+    max-width: 270px;
+    width: 100%;
+    margin-left: 40px;
+}
+
+    .input-values input {
+        display: block;
+        width: 98%;
+        padding: 7px 0 7px 5px;
+        margin-top: 40px;
+    }
+
+.input-file {
+    width: 100%;
+}
+
+.select-category {
+    width: 100%;
+    padding: 10px 0;
+    margin-top: 40px;
+}
+
+
+.image-choice {
+    position: relative;
+    padding: 17% 16%;
+    margin-left: 140px;
+    border: 1px solid black;
+    background-color: #cacaca;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+    .image-choice img {
+    }
+
+.block-ckEditor {
+    margin-top: 20px;
+}
+
+    .block-ckEditor textarea {
+        width: 99.3%;
+        display: block;
+    }
+
+.action-btn {
+    position: absolute;
+    bottom: 15px;
+    right: 10px;
+}
+
+.close, .save {
+    padding: 5px 10px;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+}
+
+.close {
+    background-color: #c91313;
+}
+
+.save {
+    background-color: #59be6e;
+}
+
+
+.item-image {
+    width: 50px;
+    height: 50px;
+    text-align: center;
+    object-fit: contain;
+}

@@ -1,4 +1,4 @@
-// Настройка сайдбара
+/*// Настройка сайдбара
 const arrowSideBar = document.querySelector(".sideBarArrow")
 const sidebar = document.querySelector(".sidebar")
 arrowSideBar.addEventListener("click", async e => {
@@ -78,4 +78,4 @@ const editBlockSet = document.querySelectorAll(".edit").forEach((e) => {
         })
 
     })
-})
+})*/

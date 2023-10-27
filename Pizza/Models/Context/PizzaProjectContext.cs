@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Pizza.Context.Entities;
 
-namespace Pizza.Context
+namespace Pizza.Models.Context
 {
     public partial class PizzaProjectContext : DbContext
     {
@@ -17,9 +16,11 @@ namespace Pizza.Context
         {
         }
 
+        public virtual DbSet<Busket> Buskets { get; set; } = null!;
         public virtual DbSet<Category> Categories { get; set; } = null!;
         public virtual DbSet<Product> Products { get; set; } = null!;
         public virtual DbSet<PromoAction> PromoActions { get; set; } = null!;
+        public virtual DbSet<Role> Roles { get; set; } = null!;
         public virtual DbSet<Slider> Sliders { get; set; } = null!;
         public virtual DbSet<User> Users { get; set; } = null!;
 
@@ -34,6 +35,16 @@ namespace Pizza.Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Busket>(entity =>
+            {
+                entity.ToTable("Busket");
+
+                entity.HasOne(d => d.Product)
+                    .WithMany(p => p.Buskets)
+                    .HasForeignKey(d => d.ProductId)
+                    .HasConstraintName("FK_Busket_Product");
+            });
+
             modelBuilder.Entity<Category>(entity =>
             {
                 entity.HasKey(e => e.Name);
@@ -70,6 +81,13 @@ namespace Pizza.Context
                 entity.Property(e => e.Name).HasMaxLength(80);
             });
 
+            modelBuilder.Entity<Role>(entity =>
+            {
+                entity.ToTable("Role");
+
+                entity.Property(e => e.NameRole).HasMaxLength(50);
+            });
+
             modelBuilder.Entity<Slider>(entity =>
             {
                 entity.ToTable("Slider");
@@ -90,6 +108,11 @@ namespace Pizza.Context
                 entity.Property(e => e.Login).HasMaxLength(50);
 
                 entity.Property(e => e.Password).HasMaxLength(100);
+
+                entity.HasOne(d => d.Role)
+                    .WithMany(p => p.Users)
+                    .HasForeignKey(d => d.RoleId)
+                    .HasConstraintName("FK_User_Role");
             });
 
             OnModelCreatingPartial(modelBuilder);

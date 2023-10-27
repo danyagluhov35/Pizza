@@ -1,0 +1,33 @@
+﻿@{
+    Layout = "/Views/Shared/_Layout.cshtml";
+    int totalPrice = 0;
+}
+@using Pizza.Models.ViewModels;
+@model List<BusketViewModel>;
+<link rel="stylesheet" href="/css/Basket/basket.css">
+
+<div class="basket-items">
+    @foreach(var item in Model)
+    {
+        <div class="basket-item">
+            <div class="basket-image">
+                <img src="@item.Product.ImgPath" alt="">
+            </div>
+            <div class="basket-name-product">
+                <p>@item.Product.Name</p>
+            </div>
+            <div class="basket-price-product">
+                <p><span>@item.Product.Price</span>.руб</p>
+            </div>
+            <div class="quantity-product">
+                <p>@item.Quantity</p>
+            </div>
+        </div>
+        totalPrice += item.Product.Price * item.Quantity;
+    }
+    <div class="buy">
+        <p>Итого: <span>@totalPrice</span>.руб</p>
+        <a class="oplata" href="#">Оплатить</a>
+    </div>
+</div>
+

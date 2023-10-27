@@ -1,12 +1,12 @@
-﻿<!DOCTYPE html>
+﻿@using System.Security.Claims;
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="~/css/main.css">
+    <link rel="stylesheet" href="~/css/Layout/LayoutMain.css">
     <link rel="stylesheet" href="~/css/normalize.css">
-    <link rel="stylesheet" href="~/css/admin.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
     <div class="wrapper">
@@ -45,12 +45,18 @@
                                 Контакты
                             </a>
                         </li>
+                        @if(User.FindFirst(ClaimsIdentity.DefaultRoleClaimType)?.Value == "admin")
+                        {
+                            <li class="btn__list">
+                                <a href="/products" class="btn__link" style="color:red; font-size:18px;">
+                                    Панель администратора
+                                </a>
+                            </li>
+                        }
                     </ul>
                 </nav>
                 <div class="basket">
-                    <a href="#">
-                        <img src="~/images/mainImage/Корзина.svg" alt="">
-                    </a>
+                    @await Component.InvokeAsync("Basket")
                 </div>
             </div>
         </div>
@@ -58,3 +64,24 @@
     </div>
 </body>
 </html>
+
+
+<script>
+    document.querySelectorAll(".btn__send").forEach((p) => {
+        p.addEventListener("click", async e => {
+            var Id = e.target.getAttribute("data-id")
+            var formData = new FormData()
+            formData.append("Id", Id)
+            console.log(Id)
+            const response = await fetch("@Url.Action("Take", "Basket")", {
+                method : "POST",
+                body: formData
+            })
+            if(response.ok == true){
+                const data = await response.json()
+
+                document.querySelector(".basket a span").textContent = data
+            }
+        })
+    })
+</script>

@@ -52,3 +52,21 @@
     font-size: 22px;
     color: #cf0202;
 }
+
+
+
+/*----- Стилизация ошибок -----*/
+.field-validation-error {
+    display: block;
+    text-align: center;
+    font-weight: 600;
+    color: #ed1717;
+}
+
+.password.input-validation-error{
+    border:1px solid red;
+}
+
+.login.input-validation-error {
+    border: 1px solid red;
+}

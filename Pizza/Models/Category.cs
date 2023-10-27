@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Pizza.Context.Entities
+namespace Pizza.Models
 {
     public partial class Category
     {

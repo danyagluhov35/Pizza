@@ -1,0 +1,188 @@
+﻿
+slide {
+    max-width: 1200px;
+    margin: 0 auto;
+    background-color: #161516;
+}
+
+.items {
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    grid-gap: 30px;
+    align-items:center;
+}
+
+.item {
+}
+
+.item-image {
+    position: relative;
+    padding: 40%;
+}
+
+    .item-image img {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+    }
+
+.item-management {
+    display: flex;
+    grid-gap: 1px;
+}
+
+    .item-management a {
+        text-decoration: none;
+        width: 100%;
+        display: block;
+        text-align: center;
+        padding: 10px 0;
+        margin-top: 1px;
+        color: #fff;
+        font-weight: 600;
+        font-size: 18px;
+    }
+
+.item-delete {
+    background-color: #ca3845;
+}
+
+.item-edit {
+    background-color: #3acbbe;
+}
+
+.item-add__link {
+    display: block;
+}
+
+.stock-image__edit{
+    position:relative;
+    padding-top:30%;
+    max-width:300px;
+}
+
+.stock-image__edit img {
+    position:absolute;
+    border:1px solid red;
+    left:0;
+    top:0;
+    width:100%;
+    height:100%;
+}
+
+@media(max-width:820px) {
+    body {
+        max-width: 720px;
+    }
+
+    .items {
+        grid-template-columns: repeat(2,1fr);
+    }
+}
+
+@media(max-width:414px) {
+    body {
+        max-width: 320px;
+    }
+
+    .items {
+        grid-template-columns: repeat(1,1fr);
+    }
+}
+
+
+/*----- Стилизация блока добавления -----*/
+p {
+    margin: 0;
+}
+
+body {
+   
+}
+
+.window-settings {
+    margin-top:100px;
+    background-color: #E75329;
+    display:none;
+}
+.window-settings.open {
+    display:block;
+}
+form {
+    position: relative;
+    padding-bottom: 50px;
+}
+
+.block-input {
+    padding-top: 40px;
+    display: flex;
+}
+
+.input-values {
+    max-width: 270px;
+    width: 100%;
+    margin-left: 40px;
+}
+
+    .input-values input {
+        display: block;
+        width: 98%;
+        padding: 7px 0 7px 5px;
+        margin-top: 40px;
+    }
+
+.input-file {
+    width: 100%;
+}
+
+
+
+
+.image-choice {
+    position: relative;
+    padding: 15%;
+    margin-left: 140px;
+    border: 1px solid black;
+    background-color: #cacaca;
+}
+
+    .image-choice img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+.block-ckEditor {
+    margin-top: 20px;
+}
+
+    .block-ckEditor textarea {
+        width: 99.3%;
+        display: block;
+    }
+
+.action-btn {
+    position: absolute;
+    bottom: 15px;
+    right: 10px;
+}
+
+.close, .save {
+    padding: 5px 10px;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+}
+
+.close {
+    background-color: #c91313;
+}
+
+.save {
+    background-color: #59be6e;
+}

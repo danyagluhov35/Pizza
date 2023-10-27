@@ -2,7 +2,7 @@
     Layout = "/Views/Shared/_Layout.cshtml";
 }
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
-
+<link rel="stylesheet" href="~/css/Layout/LayoutAdmin.css" />
 
 
 
@@ -14,7 +14,7 @@
                 <div class="management__nav">
                     <ul class="management-menu__list">
                         <li>
-                            <a href="stocks" class="management-menu__link management-nav__slide"><span><img src="/images/adminImage/Mask group.svg" alt=""></span>Слайд</a>
+                            <a asp-action="Index" asp-controller="Stocks" asp-area="Admin" class="management-menu__link management-nav__slide"><span><img src="/images/adminImage/Mask group.svg" alt=""></span>Слайд</a>
                         </li>
                         <li>
                             <a href="#" class="management-menu__link management-nav__menu"><span><img src="/images/adminImage/Mask group-1.svg" alt=""></span>Меню</a>
@@ -23,7 +23,7 @@
                                     <a asp-action="Index" asp-controller="Products" asp-route-productName="pizza" class="management-menu__link sub-management-menu__link sub-management-nav__menu pizza-sub-management-nav__menu"><span><img src="/images/adminImage/Mask group.svg" alt=""></span>Пицца</a>
                                 </li>
                                 <li>
-                                    <a href="#" class="management-menu__link sub-management-menu__link sub-management-nav__menu rolls-sub-management-nav__menu"><span><img src="/images/adminImage/Mask group.svg" alt=""></span>Роллы</a>
+                                    <a asp-action="Index" asp-controller="Products" asp-route-productName="roll" class="management-menu__link sub-management-menu__link sub-management-nav__menu rolls-sub-management-nav__menu"><span><img src="/images/adminImage/Mask group.svg" alt=""></span>Роллы</a>
                                 </li>
                             </ul>
                         </li>
@@ -43,3 +43,15 @@
         </div>
     </div>
 </div>
+
+
+<script>
+    // Настройка сайдбара
+    const arrowSideBar = document.querySelector(".sideBarArrow")
+    const sidebar = document.querySelector(".sidebar")
+    arrowSideBar.addEventListener("click", async e => {
+        e.preventDefault()
+        arrowSideBar.classList.toggle("open")
+        sidebar.classList.toggle("open")
+    })
+</script>

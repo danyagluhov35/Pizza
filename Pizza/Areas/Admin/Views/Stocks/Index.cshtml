@@ -2,112 +2,97 @@
     Layout = "/Areas/Admin/Views/Shared/_Layout2.cshtml";
 }
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
-@using Pizza.Models;
-@model SlideViewModel;
+@using Pizza.Models.ViewModels;
+@model PromoViewModel;
 
-<link rel="stylesheet" href="~/css/slide.css">
+<link rel="stylesheet" href="~/css/Admin/adminSlide.css">
+<link rel="stylesheet" href="~/css/Input/inputFile.css">
 <script src="https://cdn.ckeditor.com/ckeditor5/40.0.0/classic/ckeditor.js"></script>
 <script src="https://ckeditor.com/apps/ckfinder/3.5.1/ckfinder.js"></script>
 
-<div class="slide-grid">
-    @foreach (var item in Model.PromoActions)
-    {
-        <div class="slide-item">
-            <div class="slide-block">
-                <img src="@item.TitleImg" alt="">
-                <a href="#" class="editSlide">
-                    <img src="/images/adminImage/edit.svg">
-                </a>
+<div class="slide">
+    <div class="items">
+        @foreach(var item in Model.PromoActions)
+        {
+            <div class="item" id="@item.Id">
+                <div class="item-image">
+                    <img src="@item.TitleImg" alt="" class="image">
+                </div>
+                <div class="item-management">
+                    <a asp-action="DeletePromo" asp-controller="Stocks" asp-area="Admin" asp-route-id="@item.Id" class="item-delete">Удалить</a>
+                    <a href="#" class="item-edit">Исправить</a>
+                </div>
             </div>
-            <label class="input-file" style="display: none;">
-                <input class="file" type="file" />
-                <span>Выберите файл</span>
-                <input type="text" class="imgPath" value="" style="display: none;">
-            </label>
-            <a href="#" class="slide-block__delete">Удалить</a>
-            <a href="#" class="slide-block__save" style="display: none;">Сохранить</a>
+        }
+
+        <div class="item item-add">
+            <a href="#" class="item-add__link item-image">
+                <img src="images/adminImage/add-blue.svg" alt="" class="image">
+            </a>
         </div>
-    }
-    <a class="slide-item__add">
-        <img src="/images/adminImage/add.svg" alt="" class="add">
-    </a>
+    </div>
 </div>
+
+
+
+
 
 <div class="window-settings">
-    <div class="block-input">
-        <div class="stock-image block">
-            <label class="main-image__title">Основное изображение</label>
-            <label class="main-image__input">
-                <input class="file" type="file" />
-                <span>Выберите файл</span>
-                <input type="text" class="main-image__file" value="" style="display: none;">
-            </label>
-        </div>
+    <form asp-action="Details" asp-controller="Stocks" asp-area="Admin">
+        <div class="block-input">
+            <input type="text" style="display:none" class="Id" asp-for="PromoAction.Id" />
+            <div class="input-values">
+                <label class="input-file">
+                    <span class="error-image"></span>
+                    <input type="file" class="fileStock file">
+                    <span class="choice-file">Основное изображение</span>
+                    <input type="text" class="main-image__file" style="display:none;" asp-for="PromoAction.TitleImg">
+                </label>
 
-        <div class="stock-input block">
-            <label class="stock-name__title">Название акции</label>
-            <input type="text" class="stock-name__input">
-        </div>
+                <span class="error-name"></span>
+                <input type="text" class="name" placeholder="Название акции" asp-for="PromoAction.Name">
 
-        <div class="stock-link block">
-            <label class="stock-link__title">Ссылка на акцию</label>
-            <input type="text" class="stock-link__inut">
+                <span class="error-href"></span>
+                <input type="text" class="href" placeholder="Ссылка на акцию" asp-for="PromoAction.Href">
+
+                <span class="error-content"></span>
+                <input type="text" class="desc" placeholder="Описание акции">
+            </div>
+            <div class="image-choice">
+                <img src="/images/tiger.jpg" alt="">
+            </div>
         </div>
-    </div>
-    <div class="block-ckeditor">
-        <textarea name="editor" id="editor"></textarea>
-    </div>
-    <div class="addblock-settings__decide">
-        <a href="#" class="closeSlide"><img src="/images/adminImage/close.svg"></a>
-        <a href="#" class="saveSlide" onclick="document.querySelector('.saveInput').click()"><img src="/images/adminImage/save.svg"></a>
-        <input type="submit" style="display:none" class="saveInput" />
-        <input type="text" class="imagePath-input" style="display:none" />
-    </div>
+        <div class="block-ckEditor">
+            <textarea id="editor" asp-for="PromoAction.Content"></textarea>
+        </div>
+        <div class="action-btn">
+            <button class="close">Закрыть</button>
+            <button class="save">Сохранить</button>
+        </div>
+    </form>
 </div>
 
 
 
-<script>
-    // Настройка сайдбара
-    const arrowSideBar = document.querySelector(".sideBarArrow")
-    const sidebar = document.querySelector(".sidebar")
-    arrowSideBar.addEventListener("click", async e => {
-        e.preventDefault()
-        arrowSideBar.classList.toggle("open")
-        sidebar.classList.toggle("open")
-    })
-
-    // Настройка открытия и закрытия окна добавления контента
-    const addBlockSet = document.querySelector(".addblock-settings")
-
-    document.querySelector(".addblock").addEventListener("click", async e => {
-        addBlockSet.classList.add("open")
-    })
-    document.querySelector(".close").addEventListener("click", async e => {
-        addBlockSet.classList.remove("open")
-    })
-</script>
 
 
 
-<script>
-    document.querySelector(".slide-block").addEventListener("click", async e => {
-        const elements = e.target.parentNode.parentNode.parentNode.childNodes
 
 
-        elements[1].style.display = "none"
-        elements[3].style.display = "block"
 
-        elements[5].style.display = "none"
-        elements[7].style.display = "block"
 
-    })
-</script>
+
+
+
+
+
+
 
 
 
 
 <script>
+    var editor;
     // CKEditor
     ClassicEditor
         .create(document.querySelector('#editor'), {
@@ -125,22 +110,94 @@
                 ]
             }
         })
-        .then(editor => {
-            console.log('Editor was initialized', editor);
+        .then(NewEditor => {
+            editor = NewEditor;
         })
         .catch(error => {
             console.error(error.stack);
         });
-</script>
 
 
-<script>
+
+
+
+
+
+
+
+
+
+    var imagePath;
+
+    // При нажатии на "добавить" открывается окно
+    // When you click on the add "button", a window opens
     const addBlockSlide = document.querySelector(".window-settings")
-
-    document.querySelector(".slide-item__add").addEventListener("click", async e => {
+    document.querySelector(".item-add").addEventListener("click", async e => {
         addBlockSlide.classList.add("open")
     })
     document.querySelector(".close").addEventListener("click", async e => {
+        e.preventDefault()
         addBlockSlide.classList.remove("open")
     })
+
+    document.querySelector(".fileStock").addEventListener("change", async e => {
+        const file = e.target.files[0]
+        if (!file || !file.type.match(/image.*/)) return
+        var formData = new FormData()
+        formData.append("image", file)
+
+        const response = await fetch("https://api.imageban.ru/v1", {
+            method: "POST",
+            body: formData,
+            headers: {
+                "Accept": "application/json",
+                "Authorization": "TOKEN " + "NzspDu1dS8jc0LTGcJXo"
+            }
+        })
+        if (response.ok == true) {
+            const data = await response.json()
+            imagePath = data.data.link
+            //buttonFile.style.backgroundImage = `url("${imagePath}")`
+            //buttonFile.textContent = ""
+            document.querySelector(".main-image__file").value = imagePath
+            document.querySelector(".image-choice img").src = imagePath
+        }
+    })
+
+    // При клике на кнопку "Исправить
+    // When you click on "edit" button
+    const addBlockSlides = document.querySelector(".window-settings")
+    document.querySelectorAll(".item-edit").forEach((c) => {
+        c.addEventListener("click", async e => {
+            const id = e.target.parentElement.parentElement.getAttribute("id");
+            var response = await fetch("@Url.Action("GetPromo", "Stocks")", {
+                method: "POST",
+                headers: { "Accept": "application/json", "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    Id: id
+                })
+            })
+            if (response.ok == true) {
+                const data = await response.json()
+
+                addBlockSlide.classList.add("open")
+                console.log(data)
+                document.querySelector(".name").value = data.name
+                document.querySelector(".href").value = data.href
+                document.querySelector(".image-choice img").src = data.titleImg
+                document.querySelector(".Id").value = data.id
+                editor.setData(data.content)
+                document.querySelector(".main-image__file").value = data.titleImg
+            }
+        })
+    })
+</script>
+
+
+
+
+
+
+<script>
+    
 </script>

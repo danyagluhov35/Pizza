@@ -1,17 +1,18 @@
 ﻿@{
     Layout = "/Views/Shared/_Layout.cshtml";
 }
-@using Pizza.Context;
-@model PizzaProjectContext; 
+@using Pizza.Models.ViewModels;
+@using System.Security.Claims;
+@model IndexViewModel; 
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
+<link rel="stylesheet" href="~/css/main.css" />
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-
-
-<a href="/products">Войти панель</a>
 <div class="container">
     <div class="main">
         <div class="swiper">
             <div class="swiper-wrapper">
-                @foreach (var item in Model.PromoActions)
+                @foreach (var item in Model.promoActions)
                 {
                     <div class="swiper-slide"><img src="@item.TitleImg" alt=""></div>
                 }
@@ -19,19 +20,21 @@
         </div>
     </div>
     <div class="products">
-        <h2 class="product__name">Пицца</h2>
-        <div class="pizza__items items">
-            @foreach (var item in Model.Products)
-            {
-                <div class="item">
-                    <img src="@item.ImgPath" alt="">
-                    <p class="item__name">@item.Name</p>
-                    <button class="btn__send">@item.Price<span>.руб</span></button>
-                </div>
-            }
-        </div>
-
-        
+        @foreach(var category in Model.Categories)
+        {
+            <h2 class="product__name">@category.Name</h2>
+            <div class="items">
+                @foreach(var product in category.Products)
+                {
+                    <div class="item" id="@product.Id">
+                        <input type="text" class="product-id" id="product-id" value="@product.Id" style="display:none;" asp-for="@Model.Product.Id" />
+                        <img src="@product.ImgPath" alt="">
+                        <p class="item__name">@product.Name</p>
+                        <button class="btn__send" data-id="@product.Id">@product.Price<span>.руб</span></button>
+                    </div>
+                }
+            </div>
+        }
     </div>
 </div>
 <footer class="footer">
@@ -58,7 +61,5 @@
 <script src="/js/burger.js"></script>
 <script src="/js/swiper.js"></script>
 
-<script>
 
-</script>
 

@@ -1,5 +1,5 @@
-﻿@using Pizza.Models.ViewModels;
-@model LoginViewModel;
+﻿@using Pizza.Models;
+@model User;
 
 <link rel="stylesheet" href="~/css/login.css">
 
@@ -9,11 +9,10 @@
     <div class="container">
         <div class="authorize">
             <span asp-validation-for="Login"></span>
-            <input type="text" asp-for="Password" class="login" placeholder="Логин">
+            <input type="text" asp-for="Login" class="login" placeholder="Логин">
             <span asp-validation-for="Password"></span>
-            <input type="password" asp-for="Login" class="password" placeholder="Пароль">
+            <input type="password" asp-for="Password" class="password" placeholder="Пароль">
             <input type="submit" class="send" value="Авторизация"/>
-            <span asp-validation-for="IsValidUser" class="IsValidUser"></span>
         </div>
     </div>
 </form>
