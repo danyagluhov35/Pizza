@@ -22,7 +22,7 @@
     <div class="products">
         @foreach(var category in Model.Categories)
         {
-            <h2 class="product__name">@category.Name</h2>
+            <h2 class="product__name">@category.RusName</h2>
             <div class="items">
                 @foreach(var product in category.Products)
                 {

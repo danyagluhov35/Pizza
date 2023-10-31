@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Pizza.Models;
 
 namespace Pizza.Models.Context
 {
@@ -42,6 +43,7 @@ namespace Pizza.Models.Context
                 entity.HasOne(d => d.Product)
                     .WithMany(p => p.Buskets)
                     .HasForeignKey(d => d.ProductId)
+                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("FK_Busket_Product");
             });
 
@@ -52,6 +54,8 @@ namespace Pizza.Models.Context
                 entity.Property(e => e.Name).HasMaxLength(50);
 
                 entity.Property(e => e.Id).ValueGeneratedOnAdd();
+
+                entity.Property(e => e.RusName).HasMaxLength(50);
             });
 
             modelBuilder.Entity<Product>(entity =>
