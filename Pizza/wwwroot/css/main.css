@@ -274,10 +274,10 @@ body.lock {
     align-items: center;
 }
 
-    .basket a span {
-        display: flex;
-    }
+ .basket a span {
+     display: flex;
+ }
 
-        .basket a span p {
-            margin: 0;
-        }
+ .basket a span p {
+     margin: 0;
+ }

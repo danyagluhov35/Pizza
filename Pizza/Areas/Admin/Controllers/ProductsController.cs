@@ -32,6 +32,9 @@ namespace Pizza.Areas.Admin.Controllers
             return View(productModel);
         }
 
+        /// <summary>
+        ///     Сохранение продукта | Save product
+        /// </summary>
         [Route("Admin/Products/Save")]
         [HttpPost]
         public IActionResult Save(Product product)
@@ -53,30 +56,34 @@ namespace Pizza.Areas.Admin.Controllers
             }
             return RedirectToAction("Index", new { productName = product.CategoriesName });
         }
-
+        /// <summary>
+        ///     Удаление продукта | Delete product 
+        /// </summary>
         [Route("delete")]
         public async Task<IActionResult> Delete(int id)
         {
-            Product? pizzaContext = await db.Products.FirstOrDefaultAsync(p => p.Id == id);
-            if (pizzaContext != null)
+            Product? data = await db.Products.FirstOrDefaultAsync(p => p.Id == id);
+            if (data != null)
             {
-                db.Products.Remove(pizzaContext);
+                db.Products.Remove(data);
                 await db.SaveChangesAsync();
             }
-            return RedirectToAction("Index", new { productName = pizzaContext?.CategoriesName });
+            return RedirectToAction("Index", new { productName = data?.CategoriesName });
         }
-
+        /// <summary>
+        ///     Редактирование продукта | Edit product
+        /// </summary>
         [Route("edit")]
         public async Task<IActionResult> Edit(Product product)
         {
-            Product? productData = await db.Products.FirstOrDefaultAsync(p => p.Id == product.Id);
-            if (productData != null)
+            Product? data = await db.Products.FirstOrDefaultAsync(p => p.Id == product.Id);
+            if (data != null)
             {
-                productData = new Product() { Name = product.Name, Price = product.Price, ImgPath = product.ImgPath };
-                db.Products.Update(productData);
+                data = new Product() { Name = product.Name, Price = product.Price, ImgPath = product.ImgPath };
+                db.Products.Update(data);
                 db.SaveChanges();
             }
-            return RedirectToAction("Index", new { productName = productData?.CategoriesName });
+            return RedirectToAction("Index", new { productName = data?.CategoriesName });
         }
     }
 }
