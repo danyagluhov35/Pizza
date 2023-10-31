@@ -64,7 +64,47 @@ namespace Pizza.Controllers
                     Console.WriteLine(ex.Message);
                 }
             }
-            return View();
+            return RedirectToAction("Index","Basket");
+        }
+        public IActionResult SingleDelete(int id)
+        {
+            using(PizzaProjectContext db = new())
+            {
+                try
+                {
+                    var data = db.Buskets.FirstOrDefault(b => b.ProductId == id);
+                    if (data != null)
+                    {
+                        db.Buskets.Remove(data);
+                        db.SaveChanges();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+            }
+            return RedirectToAction("Index", "Basket");
+        }
+        public IActionResult SingleAdd(int id)
+        {
+            using (PizzaProjectContext db = new())
+            {
+                try
+                {
+                    var data = db.Buskets.FirstOrDefault(b => b.ProductId == id);
+                    if (data != null)
+                    {
+                        db.Buskets.Add(new Busket() { ProductId = data.ProductId });
+                        db.SaveChanges();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+            }
+            return RedirectToAction("Index", "Basket");
         }
     }
 }

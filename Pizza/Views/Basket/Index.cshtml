@@ -10,7 +10,7 @@
     @foreach(var item in Model)
     {
         <div class="basket-item">
-            <a asp-action="DeleteAll" asp-controller="Basket" asp-route-id="@item.ProductId" class="busket-delete">
+            <a class="busket-deleteall" asp-action="DeleteAll" asp-controller="Basket" asp-route-id="@item.ProductId">
                 <img src="/images/adminImage/delete.svg">
             </a>
             <div class="basket-image">
@@ -20,7 +20,13 @@
                 <p>@item.Product.Name</p>
             </div>
             <div class="basket-price-product">
+                <a class="busket-delete" asp-action="SingleDelete" asp-controller="Basket" asp-route-id="@item.ProductId">
+                    <img src="/images/mainImage/DeleteProduct.png">
+                </a>
                 <p><span>@item.Product.Price</span>.руб</p>
+                <a class="busket-add" asp-action="SingleAdd" asp-controller="Basket" asp-route-id="@item.ProductId">
+                    <img src="/images/mainImage/AddProduct.png">
+                </a>
             </div>
             <div class="quantity-product">
                 <p>@item.Quantity</p>

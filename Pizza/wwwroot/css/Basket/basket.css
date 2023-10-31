@@ -19,16 +19,28 @@ body {
     border: 1px solid #E4E4E4;
     position:relative;
 }
-.busket-delete {
+.busket-deleteall {
     position: absolute;
     right: 0;
     top: 0;
     z-index:10;
 }
-.basket-image {
-    position: relative;
-    padding-top: 95%;
+.busket-add {
+    position: absolute;
+    right: 10px;
+    top: 7px;
+    z-index: 5;
 }
+.busket-delete {
+    position: absolute;
+    left: 10px;
+    top: 7px;
+    z-index:5;
+}
+    .basket-image {
+        position: relative;
+        padding-top: 95%;
+    }
 
     .basket-image img {
         position: absolute;
@@ -54,6 +66,7 @@ body {
     width: 100%;
     font-size: 14px;
     color: #fff;
+    position:relative;
 }
 
     .basket-price-product p {
