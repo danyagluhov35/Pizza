@@ -163,8 +163,8 @@ form {
     background-color: #c91313;
 }
 
-.save {
-    background-color: #59be6e;
+.action-btn .save {
+    background-color:green;
 }
 
 
