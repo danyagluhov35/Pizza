@@ -25,27 +25,31 @@ namespace Pizza.Controllers
         }
         public IActionResult Index()
         {
-            var res = _db.Buskets.GroupBy(b => b.ProductId).Select(g => new BusketViewModel
+            var data = _db.Buskets.GroupBy(b => b.ProductId).Select(g => new BusketViewModel
             {
                 ProductId = g.Key,
-                Product = g.First().Product,
+                Product = g.First().Product!,
                 Quantity = g.Count()
             }).ToList();
-            return View(res);
+            return View(data);
         }
+        /// <summary>
+        ///  Добавление продукта в корзину | Added product in busket
+        /// </summary>
         [HttpPost]
-        public IActionResult Take(Product product)
+        public async Task<IActionResult> Add(Product product)
         {
-            var data = _db.Products.FirstOrDefault(p => p.Id == product.Id);
-            if(data == null) // Логика валидации
-                return View(product);
-            _db.Buskets.Add(new Busket() { ProductId = product.Id }); // Логика добавления
-            _db.SaveChanges();
+            var data = await _db.Products.FirstOrDefaultAsync(p => p.Id == product.Id);
+            if(data != null) // Логика валидации
+                await _db.Buskets.AddAsync(new Busket() { ProductId = product.Id }); // Логика добавления
+            await _db.SaveChangesAsync();
 
             return Json(BusketService.GetTotalPrice(_db.Buskets.Include(b => b.Product).ToList()));
         }
-
-        public IActionResult DeleteAll(int id)
+        /// <summary>
+        ///     Удаление всего количества продукта в корзине | Removing all single product
+        /// </summary>
+        public async Task<IActionResult> DeleteAll(int id)
         {
             using(PizzaProjectContext db = new())
             {
@@ -56,7 +60,7 @@ namespace Pizza.Controllers
                     {
                         foreach (var item in data)
                             db.Buskets.Remove(item);
-                        db.SaveChanges();
+                        await db.SaveChangesAsync();
                     }
                 }
                 catch (Exception ex)
@@ -66,17 +70,20 @@ namespace Pizza.Controllers
             }
             return RedirectToAction("Index","Basket");
         }
-        public IActionResult SingleDelete(int id)
+        /// <summary>
+        ///     Удаление одного количества продукта в корзине
+        /// </summary>
+        public async Task<IActionResult> SingleDelete(int id)
         {
             using(PizzaProjectContext db = new())
             {
                 try
                 {
-                    var data = db.Buskets.FirstOrDefault(b => b.ProductId == id);
+                    var data = await db.Buskets.FirstOrDefaultAsync(b => b.ProductId == id);
                     if (data != null)
                     {
                         db.Buskets.Remove(data);
-                        db.SaveChanges();
+                        await db.SaveChangesAsync();
                     }
                 }
                 catch (Exception ex)
@@ -86,17 +93,20 @@ namespace Pizza.Controllers
             }
             return RedirectToAction("Index", "Basket");
         }
-        public IActionResult SingleAdd(int id)
+        /// <summary>
+        ///     Добавление одного количества продукта в корзине
+        /// </summary>
+        public async Task<IActionResult> SingleAdd(int id)
         {
             using (PizzaProjectContext db = new())
             {
                 try
                 {
-                    var data = db.Buskets.FirstOrDefault(b => b.ProductId == id);
+                    var data = await db.Buskets.FirstOrDefaultAsync(b => b.ProductId == id);
                     if (data != null)
                     {
                         db.Buskets.Add(new Busket() { ProductId = data.ProductId });
-                        db.SaveChanges();
+                        await db.SaveChangesAsync();
                     }
                 }
                 catch (Exception ex)

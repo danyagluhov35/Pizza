@@ -47,6 +47,12 @@ namespace Pizza.Areas.Admin.Controllers
                     ProductCreate productCreate = new(productPizza.Create(product.Name!, product.Price, product.ImgPath!, product.CategoriesName));
                     productCreate.CreateProduct();
                 }
+                else if(product.CategoriesName == "drink")
+                {
+                    ProductFactory productDrink = new ProductFactoryDrink();
+                    ProductCreate productCreate = new(productDrink.Create(product.Name!, product.Price, product.ImgPath!, product.CategoriesName));
+                    productCreate.CreateProduct();
+                }
                 else
                 {
                     ProductFactory productRoll = new ProductFactoryRoll();

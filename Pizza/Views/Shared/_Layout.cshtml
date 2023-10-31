@@ -66,22 +66,3 @@
 </html>
 
 
-<script>
-    document.querySelectorAll(".btn__send").forEach((p) => {
-        p.addEventListener("click", async e => {
-            var Id = e.target.getAttribute("data-id")
-            var formData = new FormData()
-            formData.append("Id", Id)
-            console.log(Id)
-            const response = await fetch("@Url.Action("Take", "Basket")", {
-                method : "POST",
-                body: formData
-            })
-            if(response.ok == true){
-                const data = await response.json()
-
-                document.querySelector(".basket a span").textContent = data
-            }
-        })
-    })
-</script>

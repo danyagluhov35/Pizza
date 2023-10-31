@@ -63,3 +63,23 @@
 
 
 
+<script>
+    document.querySelectorAll(".btn__send").forEach((p) => {
+        p.addEventListener("click", async e => {
+            const button = p;
+            var Id = await button.getAttribute("data-id")
+            var formData = new FormData()
+            formData.append("Id", Id)
+            console.log(Id)
+            const response = await fetch("@Url.Action("Add", "Basket")", {
+                method: "POST",
+                body: formData
+            })
+            if (response.ok == true) {
+                const data = await response.json()
+
+                document.querySelector(".basket a span").textContent = data
+            }
+        })
+    })
+</script>

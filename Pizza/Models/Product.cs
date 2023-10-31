@@ -25,20 +25,5 @@ namespace Pizza.Models
         public virtual Category? CategoriesNameNavigation { get; set; }
         public virtual ICollection<Busket> Buskets { get; set; }
 
-        public override bool Equals(object obj)
-        {
-            if (obj == null || GetType() != obj.GetType())
-            {
-                return false;
-            }
-
-            Product otherProduct = (Product)obj;
-            return Id == otherProduct.Id;
-        }
-
-        public override int GetHashCode()
-        {
-            return Id.GetHashCode();
-        }
     }
 }
