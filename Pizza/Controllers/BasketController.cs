@@ -42,9 +42,29 @@ namespace Pizza.Controllers
             _db.Buskets.Add(new Busket() { ProductId = product.Id }); // Логика добавления
             _db.SaveChanges();
 
-
-
             return Json(BusketService.GetTotalPrice(_db.Buskets.Include(b => b.Product).ToList()));
+        }
+
+        public IActionResult DeleteAll(int id)
+        {
+            using(PizzaProjectContext db = new())
+            {
+                try
+                {
+                    var data = db.Buskets.Where(b => b.ProductId == id).ToList();
+                    if(data != null)
+                    {
+                        foreach (var item in data)
+                            db.Buskets.Remove(item);
+                        db.SaveChanges();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+            }
+            return View();
         }
     }
 }

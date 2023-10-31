@@ -10,6 +10,9 @@
     @foreach(var item in Model)
     {
         <div class="basket-item">
+            <a asp-action="DeleteAll" asp-controller="Basket" asp-route-id="@item.ProductId" class="busket-delete">
+                <img src="/images/adminImage/delete.svg">
+            </a>
             <div class="basket-image">
                 <img src="@item.Product.ImgPath" alt="">
             </div>
