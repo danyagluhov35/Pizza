@@ -4,6 +4,5 @@
     {
         public IEnumerable<Product> products = new List<Product>();
         public Product Product { get; set; } = new Product();
-
     }
 }
